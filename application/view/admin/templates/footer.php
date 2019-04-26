@@ -83,7 +83,7 @@
   <!--  Notifications Plugin    -->
   <script src="<?= BASEURL ?>asset/js/plugins/bootstrap-notify.js"></script>
   <!-- Moment js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?= BASEURL ?>asset/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
@@ -252,7 +252,7 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-  </script>
+</script>
 </body>
 
 </html>

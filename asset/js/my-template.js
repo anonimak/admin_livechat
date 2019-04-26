@@ -2,6 +2,7 @@ var sidebar_wrapper = $('#user_online');
 var chat_field = $('#sohbet');
 var chat_name = $('div.chat_list').find('.chat_name');
 var table_list_chat = $('table.list-chat');
+var form_chat = $('#form_chat');
 
 
 // sound location
@@ -57,8 +58,8 @@ template = {
         list_chat.html(body);
 
         $('button.detail').on('click', function () {
-            let room = $(this).data('room');
-            let name = $(this).data('name');
+            var room = $(this).data('room');
+            var name = $(this).data('name');
             // alert(room);
 
             // re join room
@@ -87,9 +88,9 @@ template = {
 
     },
     addtoBalon: function (data) {
-        let body = ``;
-        let timestamp = moment(data.timestamp).format('LT');
-        let message = data.message.replace(`\n`, `<br>`);
+        var body = ``;
+        var timestamp = moment(data.timestamp).format('LT');
+        var message = data.message;
         if (cs.username == data.username) {
             body += `
             <div class="balon1 p-2 m-0 position-relative" data-is="You - ${timestamp}">
@@ -102,6 +103,9 @@ template = {
             </div>`;
         }
         chat_field.append(body);
+        chat_field.animate({
+            scrollTop: $(chat_field).prop("scrollHeight")
+        }, 0);
     },
     fetchtoTable: function (data, socket) {
         var table = $('table#visitor_table');
@@ -141,7 +145,7 @@ template = {
                 Cookies.set('menu_side', 'chat_list', {
                     expires: 1
                 });
-
+                template.loadingModal('show');
                 // Cookies set room active
                 Cookies.set('room_active', r_id, {
                     expires: 1
@@ -151,13 +155,14 @@ template = {
                 socket.emit('load conversation', {
                     room_id: r_id
                 });
-
+                template.loadingModal('hide');
                 template.check_menu(socket, cs);
+
             });
         }
     },
     check_menu: function (socket, cs) {
-        let cookies_menu = Cookies.get('menu_side');
+        var cookies_menu = Cookies.get('menu_side');
         if (cookies_menu) {
             $('ul.nav-stacked').find('li.nav-item').find('a').removeClass('active');
             $('ul.nav-stacked').find('li.nav-item').find('a').each(function () {
@@ -240,5 +245,36 @@ template = {
             maxSize: 60,
             minSize: 20
         });
+    },
+
+
+    // EVENT HANDLER
+    send_chat: function (socket) {
+
+        // alert(socket);
+        var username = cs.username;
+        var timestamp = moment();
+        var text_message = form_chat.find('#text');
+        var message = text_message.val();
+
+        // check value message
+        // sanitize whitespace
+        if (message.trim() == '') {
+            return false;
+        }
+
+        data = {
+            username: username,
+            message: message,
+            timestamp: timestamp
+        }
+
+        // send to server
+        socket.emit('new message', message);
+
+        // clear text message
+        text_message.val('');
+        // create bubble to show in chat_field
+        template.addtoBalon(data);
     }
 }

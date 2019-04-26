@@ -125,13 +125,13 @@
           </div>
         </div>
         <div class="w-100 card-footer">
-          <form class="m-0 p-0" action="" method="POST" autocomplete="off">
+          <form class="m-0 p-0" action="" method="POST" autocomplete="off" id="form_chat">
             <div class="row m-0 p-0">
               <div class="col-10 m-0 p-1 my-auto">
                 <input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..." placeholder="Type a message..." required>
               </div>
               <div class="col-2 m-0 p-1">
-                <button class="btn btn-outline-secondary rounded border w-100" title="Gönder!" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button id="btn_send" class="btn btn-outline-secondary rounded border w-100" title="Gönder!" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
               </div>
             </div>
           </form>

@@ -23,8 +23,8 @@ $(function () {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
-  // var socket = io.connect('http://1.1.1.17:3000');
-  var socket = io.connect('http://apps.cloudtech.id:3000');
+  var socket = io.connect('http://1.1.1.17:3000');
+  // var socket = io.connect('http://apps.cloudtech.id:3000');
 
   // Tell the server your username
   socket.emit('add user', cs);
@@ -271,9 +271,6 @@ $(function () {
 
     if (room_active == data.id) {
       template.addtoBalon(data);
-      chat_field.animate({
-        scrollTop: $(chat_field).prop("scrollHeight")
-      }, 0);
     } else {
       template.soundNotification(0);
       template.showNotification(1, 'New message from ' + data.username);
@@ -362,5 +359,15 @@ $(function () {
     chat_field.animate({
       scrollTop: $(chat_field).prop("scrollHeight")
     }, 0);
+  });
+
+  // send ajax
+  // form chat
+  var form_chat = $('#form_chat');
+  var btn_send = form_chat.find("#btn_send");
+
+  btn_send.on('click', function (e) {
+    e.preventDefault();
+    template.send_chat(socket);
   });
 });
