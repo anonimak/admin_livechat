@@ -37,6 +37,14 @@ template = {
                 cls = `text-danger`
             };
 
+            // check cookies notif
+            // var i = Cookies.get("notif_" + v.room_id);
+            // if (i > 0) {
+            //     badge = `<span class="badge badge-light">${i}</span>`;
+            // } else {
+            //     badge = ``;
+            // }
+
             body += `<tr>
                         <td>
                         <div class="form-check">
@@ -45,6 +53,7 @@ template = {
                         </td>
                         <td>
                         <p class="title">${v.name}</p>
+                        
                         </td>
                         <td class="td-actions text-right">
                             <button type="button" rel="tooltip" title="" class="btn btn-link detail" data-original-title="Edit Task" data-room="${v.room_id}" data-name="${v.name}">
@@ -55,12 +64,16 @@ template = {
             console.log(v.name);
 
         });
-        list_chat.html(body);
+        list_chat.find('tbody').html(body);
 
         $('button.detail').on('click', function () {
             var room = $(this).data('room');
             var name = $(this).data('name');
-            // alert(room);
+            let room_active = Cookies.get('room_active');
+
+            // Unset Cookies notif
+            Cookies.remove("notif_" + room_active);
+            // Unset badge
 
             // re join room
             socket.emit('cs join room', {

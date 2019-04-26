@@ -285,7 +285,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body" style="overflow-y: auto;">
           <div class="table table-responsive">
             <table class="table list-chat">
               <tbody>
@@ -293,6 +293,8 @@
               </tbody>
             </table>
           </div>
+        </div>
+        <div class="card-footer">
         </div>
       </div>
     </div>

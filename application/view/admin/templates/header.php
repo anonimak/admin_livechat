@@ -66,9 +66,13 @@ textarea:focus,
 
 
 .card::-webkit-scrollbar {
-    width: 1px;
+    width: 3px;
 }
- 
+
+.card-body::-webkit-scrollbar {
+    width: 3px;
+}
+
 ::-webkit-scrollbar-thumb {
     border-radius: 9px;
 	background: rgba(96, 125, 139,0.99);

@@ -268,12 +268,20 @@ $(function () {
   socket.on('new message', (data) => {
     // addChatMessage(data);
     let room_active = Cookies.get('room_active');
+    let i = 0;
+
+    // if (Cookies.get("notif_" + room_active)) {
+    //   i = Cookies.get("notif_" + room_active);
+    // }
 
     if (room_active == data.id) {
       template.addtoBalon(data);
     } else {
       template.soundNotification(0);
       template.showNotification(1, 'New message from ' + data.username);
+
+      // Cookies set notif badge
+      Cookies.set("notif_" + room_active, i++);
     }
   });
 
