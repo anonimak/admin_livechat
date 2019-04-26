@@ -264,11 +264,13 @@ $(function () {
     // addParticipantsMessage(data);
   });
 
+  let i = 1;
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
     // addChatMessage(data);
     let room_active = Cookies.get('room_active');
-    let i = 0;
+    alert(room_active);
+    // let room_active = Cookies.get('room_active');
 
     // if (Cookies.get("notif_" + room_active)) {
     //   i = Cookies.get("notif_" + room_active);
@@ -277,11 +279,12 @@ $(function () {
     if (room_active == data.id) {
       template.addtoBalon(data);
     } else {
-      template.soundNotification(0);
-      template.showNotification(1, 'New message from ' + data.username);
-
       // Cookies set notif badge
-      Cookies.set("notif_" + room_active, i++);
+      Cookies.set('notif_' + data.id, i++);
+      let count_notif = Cookies.get('notif_' + data.id);
+      template.soundNotification(0);
+      template.showNotification(1, count_notif + ' message from ' + data.username, data.id);
+
     }
   });
 

@@ -38,24 +38,26 @@ template = {
             };
 
             // check cookies notif
-            // var i = Cookies.get("notif_" + v.room_id);
-            // if (i > 0) {
-            //     badge = `<span class="badge badge-light">${i}</span>`;
-            // } else {
-            //     badge = ``;
-            // }
+            var i = Cookies.get("notif_" + v.room_id);
+            if (i > 0) {
+                badge = i;
+            } else {
+                badge = ``;
+            }
 
             body += `<tr>
                         <td>
-                        <div class="form-check">
-                        <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 5px 0 12px 12px; font-size:8px"></i> 
-                        </div>
+                            <div class="form-check">
+                                <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 5px 0 12px 12px; font-size:8px"></i> 
+                            </div>
                         </td>
                         <td>
-                        <p class="title">${v.name}</p>
-                        
+                            <p class="title" id="room_${v.room_id}">${v.name}
+                                <span class="badge badge-info pull-right">${badge}</span>
+                            </p>
                         </td>
                         <td class="td-actions text-right">
+                            
                             <button type="button" rel="tooltip" title="" class="btn btn-link detail" data-original-title="Edit Task" data-room="${v.room_id}" data-name="${v.name}">
                             <i class="fa fa-external-link-square-alt" aria-hidden="true"></i>
                             </button>
@@ -69,10 +71,15 @@ template = {
         $('button.detail').on('click', function () {
             var room = $(this).data('room');
             var name = $(this).data('name');
-            let room_active = Cookies.get('room_active');
+
+            // Cookies set room active
+            Cookies.set('room_active', room, {
+                expires: 1
+            });
 
             // Unset Cookies notif
-            Cookies.remove("notif_" + room_active);
+            Cookies.remove("notif_" + room);
+
             // Unset badge
 
             // re join room
@@ -82,11 +89,6 @@ template = {
             // load conversation
             socket.emit('load conversation', {
                 room_id: room
-            });
-
-            // Cookies set room active
-            Cookies.set('room_active', room, {
-                expires: 1
             });
 
             table_list_chat.find('tr').each(function (index, element) {
@@ -226,10 +228,11 @@ template = {
         });
     },
     // tampil notif
-    showNotification: function (type, message) {
+    showNotification: function (type, message, id) {
         // color = Math.floor((Math.random() * 4) + 1);
         types = ['primary', 'info', 'success', 'warning', 'danger'];
         icons = ['tim-icons icon-bell-55', 'tim-icons icon-bell-55', 'tim-icons icon-check-2', 'tim-icons icon-alert-circle-exc', 'tim-icons icon-alert-circle-exc']
+
 
 
         $.notify({
@@ -244,6 +247,18 @@ template = {
                 align: 'right'
             }
         });
+
+        // check cookies notif
+        // var i = Cookies.get("notif_" + v.room_id);
+        // if (i > 0) {
+        //     badge = `<span class="badge badge-light">${i}</span>`;
+        // } else {
+        //     badge = ``;
+        // }
+        var i = Cookies.get("notif_" + id);
+
+        // set badge
+        $('#room_' + id).find('span.badge').html(i);
     },
     soundNotification: function (type) {
         var audio = new Audio(sounds[type]);

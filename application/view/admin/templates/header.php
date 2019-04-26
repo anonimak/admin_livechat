@@ -149,5 +149,13 @@ textarea:focus,
     vertical-align: middle;
     border-top: 0.0625rem solid #e3e3e3;
 	}
+
+
+	/* badge */
+	.badge {
+		margin-top: 3px!important;
+    margin-bottom: 3px!important;
+    border-radius: 0.5rem!important;
+	}
   </style>
 </head>
