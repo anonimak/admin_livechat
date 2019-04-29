@@ -1,11 +1,11 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- phpMyAdmin SQL Dump
+-- version 4.4.15.10
+-- https://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 29, 2019 at 03:21 AM
--- Server version: 5.7.14
--- PHP Version: 7.0.10
+-- Host: localhost
+-- Generation Time: 29 Apr 2019 pada 04.57
+-- Versi Server: 5.5.60-MariaDB
+-- PHP Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,28 +23,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cs`
+-- Struktur dari tabel `cs`
 --
 
-CREATE TABLE `cs` (
+CREATE TABLE IF NOT EXISTS `cs` (
   `id` int(4) NOT NULL,
   `name` varchar(50) NOT NULL,
   `nick_name` varchar(50) NOT NULL,
-  `email` int(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `pass` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `cs`
+--
+
+INSERT INTO `cs` (`id`, `name`, `nick_name`, `email`, `pass`, `status`, `date_add`, `date_modify`, `user_id`) VALUES
+(1, 'rizal', 'jono', 'admin@gmail.com', '0b1e50e1fd71c96bac94144cc59cff40', 1, '2019-04-15 00:00:00', '0000-00-00 00:00:00', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_category`
+-- Struktur dari tabel `m_category`
 --
 
-CREATE TABLE `m_category` (
+CREATE TABLE IF NOT EXISTS `m_category` (
   `category_id` int(3) NOT NULL,
   `category_name` varchar(50) NOT NULL,
   `category_image` text NOT NULL,
@@ -53,10 +60,10 @@ CREATE TABLE `m_category` (
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_category`
+-- Dumping data untuk tabel `m_category`
 --
 
 INSERT INTO `m_category` (`category_id`, `category_name`, `category_image`, `category_file`, `category_color`, `date_add`, `date_modify`, `user_id`) VALUES
@@ -67,10 +74,10 @@ INSERT INTO `m_category` (`category_id`, `category_name`, `category_image`, `cat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_event`
+-- Struktur dari tabel `m_event`
 --
 
-CREATE TABLE `m_event` (
+CREATE TABLE IF NOT EXISTS `m_event` (
   `event_id` int(11) NOT NULL,
   `event_title` varchar(100) NOT NULL,
   `event_image` text NOT NULL,
@@ -78,10 +85,10 @@ CREATE TABLE `m_event` (
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_event`
+-- Dumping data untuk tabel `m_event`
 --
 
 INSERT INTO `m_event` (`event_id`, `event_title`, `event_image`, `event_desc`, `date_add`, `date_modify`, `user_id`) VALUES
@@ -90,10 +97,10 @@ INSERT INTO `m_event` (`event_id`, `event_title`, `event_image`, `event_desc`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_product`
+-- Struktur dari tabel `m_product`
 --
 
-CREATE TABLE `m_product` (
+CREATE TABLE IF NOT EXISTS `m_product` (
   `product_id` int(4) NOT NULL,
   `product_name` varchar(100) NOT NULL,
   `product_description` text NOT NULL,
@@ -103,10 +110,10 @@ CREATE TABLE `m_product` (
   `date_modify` datetime NOT NULL,
   `category_id` int(3) NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_product`
+-- Dumping data untuk tabel `m_product`
 --
 
 INSERT INTO `m_product` (`product_id`, `product_name`, `product_description`, `product_image`, `id`, `date_add`, `date_modify`, `category_id`, `user_id`) VALUES
@@ -118,10 +125,10 @@ INSERT INTO `m_product` (`product_id`, `product_name`, `product_description`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_product_detail`
+-- Struktur dari tabel `m_product_detail`
 --
 
-CREATE TABLE `m_product_detail` (
+CREATE TABLE IF NOT EXISTS `m_product_detail` (
   `detail_product_id` int(8) NOT NULL,
   `size` varchar(30) NOT NULL,
   `price` int(10) NOT NULL,
@@ -129,10 +136,10 @@ CREATE TABLE `m_product_detail` (
   `date_modify` datetime NOT NULL,
   `product_id` int(4) NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_product_detail`
+-- Dumping data untuk tabel `m_product_detail`
 --
 
 INSERT INTO `m_product_detail` (`detail_product_id`, `size`, `price`, `date_add`, `date_modify`, `product_id`, `user_id`) VALUES
@@ -162,10 +169,10 @@ INSERT INTO `m_product_detail` (`detail_product_id`, `size`, `price`, `date_add`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_profile`
+-- Struktur dari tabel `m_profile`
 --
 
-CREATE TABLE `m_profile` (
+CREATE TABLE IF NOT EXISTS `m_profile` (
   `profile_id` int(1) NOT NULL,
   `logo` varchar(20) NOT NULL,
   `video` varchar(50) NOT NULL,
@@ -178,10 +185,10 @@ CREATE TABLE `m_profile` (
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_profile`
+-- Dumping data untuk tabel `m_profile`
 --
 
 INSERT INTO `m_profile` (`profile_id`, `logo`, `video`, `name`, `desc`, `address`, `phone`, `fax`, `email`, `date_add`, `date_modify`, `user_id`) VALUES
@@ -190,17 +197,17 @@ INSERT INTO `m_profile` (`profile_id`, `logo`, `video`, `name`, `desc`, `address
 -- --------------------------------------------------------
 
 --
--- Table structure for table `m_token`
+-- Struktur dari tabel `m_token`
 --
 
-CREATE TABLE `m_token` (
+CREATE TABLE IF NOT EXISTS `m_token` (
   `token_id` int(20) NOT NULL,
   `token` text NOT NULL,
   `date_add` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `m_token`
+-- Dumping data untuk tabel `m_token`
 --
 
 INSERT INTO `m_token` (`token_id`, `token`, `date_add`) VALUES
@@ -209,20 +216,20 @@ INSERT INTO `m_token` (`token_id`, `token`, `date_add`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notify`
+-- Struktur dari tabel `notify`
 --
 
-CREATE TABLE `notify` (
+CREATE TABLE IF NOT EXISTS `notify` (
   `notify_id` int(4) NOT NULL,
   `info` text NOT NULL,
   `push` int(1) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `notify`
+-- Dumping data untuk tabel `notify`
 --
 
 INSERT INTO `notify` (`notify_id`, `info`, `push`, `date_add`, `date_modify`, `user_id`) VALUES
@@ -233,50 +240,36 @@ INSERT INTO `notify` (`notify_id`, `info`, `push`, `date_add`, `date_modify`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room`
+-- Struktur dari tabel `room`
 --
 
-CREATE TABLE `room` (
+CREATE TABLE IF NOT EXISTS `room` (
   `id` int(10) NOT NULL,
   `room_id` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `telp` varchar(16) NOT NULL,
-  `status_room` enum('opened','closed','deleted') NOT NULL DEFAULT 'opened',
+  `status_room` enum('opened','taked','deleted') NOT NULL DEFAULT 'opened',
+  `product_id` int(4) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room_detail_cs`
+-- Struktur dari tabel `slider`
 --
 
-CREATE TABLE `room_detail_cs` (
-  `id` int(10) NOT NULL,
-  `id_cs` int(10) NOT NULL,
-  `room_id` varchar(255) NOT NULL,
-  `status_cs` enum('active','nonactive') NOT NULL DEFAULT 'active',
-  `transfer_to` int(5) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `slider`
---
-
-CREATE TABLE `slider` (
+CREATE TABLE IF NOT EXISTS `slider` (
   `slider_id` int(3) NOT NULL,
   `slider_image` varchar(100) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL,
   `user_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `slider`
+-- Dumping data untuk tabel `slider`
 --
 
 INSERT INTO `slider` (`slider_id`, `slider_image`, `date_add`, `date_modify`, `user_id`) VALUES
@@ -288,10 +281,10 @@ INSERT INTO `slider` (`slider_id`, `slider_image`, `date_add`, `date_modify`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(10) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
@@ -299,10 +292,10 @@ CREATE TABLE `user` (
   `status` int(1) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_modify` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `level`, `status`, `date_add`, `date_modify`) VALUES
@@ -369,12 +362,6 @@ ALTER TABLE `room`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `room_detail_cs`
---
-ALTER TABLE `room_detail_cs`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `slider`
 --
 ALTER TABLE `slider`
@@ -394,62 +381,57 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cs`
 --
 ALTER TABLE `cs`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `m_category`
 --
 ALTER TABLE `m_category`
-  MODIFY `category_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `category_id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `m_event`
 --
 ALTER TABLE `m_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `m_product`
 --
 ALTER TABLE `m_product`
-  MODIFY `product_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `product_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `m_product_detail`
 --
 ALTER TABLE `m_product_detail`
-  MODIFY `detail_product_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `detail_product_id` int(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `m_profile`
 --
 ALTER TABLE `m_profile`
-  MODIFY `profile_id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `profile_id` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `m_token`
 --
 ALTER TABLE `m_token`
-  MODIFY `token_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `token_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `notify`
 --
 ALTER TABLE `notify`
-  MODIFY `notify_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `notify_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `room_detail_cs`
---
-ALTER TABLE `room_detail_cs`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `slider`
 --
 ALTER TABLE `slider`
-  MODIFY `slider_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `slider_id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

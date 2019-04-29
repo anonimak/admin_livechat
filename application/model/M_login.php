@@ -21,7 +21,7 @@
 
     // Find USer BY Email
     public function findUserByEmail($email){
-      $this->db->query("SELECT * FROM user WHERE email = :email");
+      $this->db->query("SELECT * FROM cs WHERE email = :email");
       $this->db->bind(':email', $email);
 
       $row = $this->db->single();
@@ -36,7 +36,7 @@
 
     // Login / Authenticate User
     public function login($email, $password){
-      $this->db->query("SELECT * FROM `user` WHERE `email`= :email");
+      $this->db->query("SELECT * FROM `cs` WHERE `email`= :email");
       $this->db->bind(':email', $email);
       $row = $this->db->single();
       
@@ -51,7 +51,7 @@
 
     // Find User By ID
     public function getUserById($id){
-      $this->db->query("SELECT * FROM user WHERE id = :id");
+      $this->db->query("SELECT * FROM cs WHERE id = :id");
       $this->db->bind(':id', $id);
 
       $row = $this->db->single();
