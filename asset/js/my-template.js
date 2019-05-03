@@ -122,17 +122,17 @@ template = {
             scrollTop: $(chat_field).prop("scrollHeight")
         }, 0);
     },
-    fetchtoTable: function (data, socket) {
-        var table = $('table#visitor_table');
-        var alert = $('#alert_visitor_table');
-        if (data.length === 0) {
+    fetchtoTable: function (datas, socket) {
+        let table = $('table#product_' + datas.id);
+        var alert = $('#alert_visitor_table_' + datas.id);
+        if (datas.data.length === 0) {
             alert.show();
             table.hide();
         } else {
             alert.hide();
             table.show();
             var row = "";
-            $.each(data, function (i, v) {
+            $.each(datas.data, function (i, v) {
                 // console.log(v.name);
                 row += "<tr>";
                 row += "<td>" + v.name + "</td>";
@@ -149,7 +149,6 @@ template = {
             btn_accept_chat.click(function (e) {
                 e.preventDefault();
                 var r_id = $(e.currentTarget).data('r_id');
-                // alert(r_id);
 
                 // emit join room
                 socket.emit('cs join room', {
@@ -207,11 +206,20 @@ template = {
 
                 switch ($(this).data('list_online')) {
                     case 'visitor_online':
+                        let product = Cookies.get(`product_${cs.user_id}`);
 
-                        socket.emit('visitor online');
+                        // ulang product
+                        $.each(JSON.parse(product), function (i, v) {
+                            console.log(v.id);
+                            socket.emit('customer product online', {
+                                id: v.id
+                            });
+                        });
+                        // socket.emit('visitor online');
 
                         break;
                     case 'chat_list':
+                        // temp.listchat_create();
                         socket.emit('chat list', cs.user_id);
 
                         socket.on('user left', () => {

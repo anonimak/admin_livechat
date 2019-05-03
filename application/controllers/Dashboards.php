@@ -4,7 +4,7 @@ class Dashboards extends Controller {
     public function __construct()
     {
         if($this->isLoggedIn()){
-            // $this->dashboardModel = $this->model('Dashboard');
+            $this->model = $this->model('M_dashboard');
             // $this->postModel = $this->model('Post');
         } else {
             $this->redirect('Users/login');
@@ -23,6 +23,14 @@ class Dashboards extends Controller {
         $this->view('admin/dashboard/'.$page);
         $this->view('admin/templates/footer');
         // $this->view('admin/templates/bottom');
+    }
+
+
+    // Ajax handler
+    public function getProductsbyCs($id)
+    {   
+        $data = $this->model->getProductsbyCs($id);
+        echo json_encode($data);
     }
 
 }

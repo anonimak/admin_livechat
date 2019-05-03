@@ -157,5 +157,62 @@ textarea:focus,
     margin-bottom: 3px!important;
     border-radius: 0.5rem!important;
 	}
+	
+
+
+
+	.main-panel{
+		border-top: 2px solid #da251c !important;
+	}
+
+	.sidebar-wrapper{
+		background-color: #da251c !important;
+		border-radius: inherit;
+	}
+
+	.card-header, .bg-primary {
+    background-color: #da251c !important;
+	}
+
+	.white-content h1, .white-content h2, .white-content h3, .white-content h4, .white-content h5, .white-content h6, .white-content p, .white-content ol li, .white-content ul li, .white-content pre {
+    
+	}
+
+	.white-content h6{
+		color: #fafafa;
+		font-size:14px;
+	}
+
+	.nav>li>a {
+		font-size:12px!important;
+	}
+
+	.nav-tabs {
+		margin-top:15px!important;
+    border-bottom: 0px!important;
+	}	
+
+	.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #fafafa;
+    background-color: #8a1812;
+		border-color: !important;
+	}
+
+	.btn-primary.btn-simple {
+		color: #da251c !important;
+		border-color: #da251c !important;
+    background: transparent;
+	}
+
+	.btn-primary.btn-simple-white {
+		color: #fafafa !important;
+		border-color: #fafafa !important;
+    background: transparent;
+	}
+
+	.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:focus, .btn-primary.active:hover{
+		background-color: #da251c !important;
+    background-image: linear-gradient(#da251c, #da251c)!important;
+	}
   </style>
 </head>

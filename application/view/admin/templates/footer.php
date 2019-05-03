@@ -95,7 +95,8 @@
   <script src="<?=BASEURL?>asset/js/socket.io.js"></script>
   <script>
   $(document).ready(function () {
-      // cs
+  
+  // object cs
   cs = {
     'user_id': <?= $_SESSION['id']?>,
     'username': '<?= $_SESSION['name']?>',
@@ -103,6 +104,10 @@
     'role' : '<?= $_SESSION['role']?>',
     'level': 'cs',
   };
+
+  // init baseurl
+  BASEURL = `<?= BASEURL ?>`;
+
   });
   </script>
   <script src="<?=BASEURL?>asset/js/main.js"></script>
