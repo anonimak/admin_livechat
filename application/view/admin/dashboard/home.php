@@ -43,38 +43,7 @@
       </div>
     </div> -->
     <div class="col-12 menu-cs visitor_online" id="table_visitor">
-      <div class="card">
-        <div class="card-header">
-          <h6>LIST VISITOR</h6>
-        </div>
-        <div class="card-body">
-          <div id="alert_visitor_table" class="alert alert-default text-center" role="alert" style="display:none">                     
-            no visitors are online
-          </div>              
-          <div class="table-responsive">
-            <table class="table tablesorter" id="visitor_table" style="display:none">
-              <thead class=" text-primary">
-                <tr>
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Email
-                  </th>
-                  <th>
-                    Telp
-                  </th>
-                  <th class="text-center">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+
     </div>
     
   </div>

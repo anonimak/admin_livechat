@@ -1,7 +1,12 @@
 temp = {
   table_create: (v) => {
     // console.log(v);
-    let product_name = v.product_name.substr(0, 20) + ' ...';
+    let product_name = '';
+    if (v.product_name.length >= 20) {
+      product_name = v.product_name.substr(0, 20) + ' ...';
+    } else {
+      product_name = v.product_name;
+    }
     body = `
       <div class="card">
         <div class="card-header">
@@ -40,7 +45,13 @@ temp = {
     return body;
   },
   listchat_create: (v) => {
-    let product_name = v.product_name.substr(0, 20) + '. . . ';
+    let product_name = '';
+    if (v.product_name.length >= 20) {
+      product_name = v.product_name.substr(0, 20) + '. . . ';
+    } else {
+      product_name = v.product_name;
+    }
+
     body = `
       <h5 data-toggle="collapse" data-target="#panel_${v.product_id}" data-toggle="tooltip" title="${v.product_name}"><i class="tim-icons icon-minimal-down pull-right"></i>
       ${product_name} (0)</h5>
@@ -191,6 +202,7 @@ $(function () {
   // user handle
   socket.on('chat list', (data) => {
     template.chatlist(socket, data);
+    console.log(data);
   });
 
   // socket.on('show user', (datas) => {

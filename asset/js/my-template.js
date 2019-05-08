@@ -24,9 +24,9 @@ template = {
     },
     chatlist: function (socket, data) {
         // console.log(data);
-        var list_chat = $('table.list-chat');
+        // var list_chat = $('table.list-chat');
         var body = ``;
-        $.each(data, function (i, v) {
+        $.each(data.data, function (i, v) {
             var status = ``;
             var cls = ``;
             if (v.status_room == `opened`) {
@@ -44,15 +44,20 @@ template = {
             } else {
                 badge = ``;
             }
+            let name = '';
+            if (v.name.length >= 25) {
+                name = $.trim(v.name).substr(0, 25) + ' ...';
+            } else {
+                name = v.name;
+            }
 
             body += `<tr>
+                        
                         <td>
-                            <div class="form-check">
-                                <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 5px 0 12px 12px; font-size:8px"></i> 
-                            </div>
-                        </td>
-                        <td>
-                            <p class="title" id="room_${v.room_id}">${v.name}
+                            
+                            <p id="room_${v.room_id}" data-toggle="tooltip" title="${v.name}">
+                                <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 7px 5px 12px 12px; font-size:8px"></i> 
+                                ${name}
                                 <span class="badge badge-info pull-right">${badge}</span>
                             </p>
                         </td>
@@ -66,7 +71,7 @@ template = {
             console.log(v.name);
 
         });
-        list_chat.find('tbody').html(body);
+        $("table#listchat_" + data.id_product).html(body);
 
         $('button.detail').on('click', function () {
             var room = $(this).data('room');
@@ -203,10 +208,11 @@ template = {
                 $(".menu-cs").hide();
                 $(".menu-cs." + $(this).data('list_online')).show('fast', 'swing');
 
+                let product = Cookies.get(`product_${cs.user_id}`);
 
                 switch ($(this).data('list_online')) {
                     case 'visitor_online':
-                        let product = Cookies.get(`product_${cs.user_id}`);
+
 
                         // ulang product
                         $.each(JSON.parse(product), function (i, v) {
@@ -219,11 +225,13 @@ template = {
 
                         break;
                     case 'chat_list':
-                        // temp.listchat_create();
-                        socket.emit('chat list', cs.user_id);
+                        // ulang product
+                        $.each(JSON.parse(product), function (i, v) {
+                            socket.emit('chat list', v.id);
 
-                        socket.on('user left', () => {
-                            socket.emit('chat list', cs.user_id);
+                            socket.on('user left', () => {
+                                socket.emit('chat list', v.id);
+                            });
                         });
                         break;
                     case 'user_online':

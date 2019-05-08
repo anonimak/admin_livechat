@@ -214,5 +214,17 @@ textarea:focus,
 		background-color: #da251c !important;
     background-image: linear-gradient(#da251c, #da251c)!important;
 	}
+
+	.table .table {
+    background-color: #dcdcdc!important;
+		border-radius: 5px;
+	}
+
+	.table th, .table td {
+    padding: 0rem!important;
+    vertical-align: middle!important;
+    border-top: 0.0625rem solid #e3e3e3!important;
+}
+
   </style>
 </head>
