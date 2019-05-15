@@ -14,7 +14,7 @@ temp = {
         </div>
         <div class="card-body">
           <div id="alert_visitor_table_${v.product_id}" class="alert alert-default text-center" role="alert" style="display:none">                     
-            no visitors are online
+            no visitor online
           </div>              
           <div class="table-responsive">
             <table class="table tablesorter" id="product_${v.product_id}">
@@ -162,11 +162,10 @@ $(function () {
   });
 
   // Whenever the server emits 'user left', log it in the chat body
-  // socket.on('user left', (data) => {
-  //   log(data.username + ' left');
-  //   addParticipantsMessage(data);
-  //   removeChatTyping(data);
-  // });
+  socket.on('user left', (data) => {
+    console.log("user left", data);
+    template.log(data.username + ' has left.');
+  });
 
   // Whenever the server emits 'typing', show the typing message
   // socket.on('typing', (data) => {
@@ -248,7 +247,7 @@ $(function () {
   });
 
   socket.on('customer product list', (data) => {
-    console.log(data);
+    console.log("test", data);
     // tumpahin
     template.fetchtoTable(data, socket);
   });

@@ -53,8 +53,8 @@
         <div class="card-header p-1 bg-primary" style="color: rgba(96, 125, 139,1.0);">
           <!-- <img class="rounded float-left" style="width: 50px; height: 50px;" src="" /> -->
             
-            <i class="fa fa fa-circle text-success float-left" title="Onaylanmış Hesap!" aria-hidden="true" style="margin: 12px 0 12px 12px; font-size:8px"></i> 
-            <h6 class="float-left chat_name" style="margin: 10px"> Yusuf Bulgurcu 
+            <!-- <i class="fa fa fa-circle text-success float-left" aria-hidden="true" style="margin: 12px 0 12px 12px; font-size:8px"></i>  -->
+            <h6 class="float-left chat_name" style="margin: 10px">
               <br>
               <!-- <small> İstanbul, TR </small> -->
             </h6>
@@ -72,25 +72,9 @@
         </div>
         <div class="card bg-sohbet border-0 m-0 p-0" style="height: 65vh;">
           <div id="sohbet" class="card border-0 m-0 p-0 position-relative bg-transparent" style="overflow-y: auto; height: 100vh;">
-            <div class="balon1 p-2 m-0 position-relative" data-is="You - 3:20 pm">
-              <a class="float-right"> Hey there! What's up? </a>
+            <div class="row justify-content-center align-items-center" style="margin: auto;">
+              <h4>Please select a chat to start messaging.</h4>
             </div>
-            <div class="balon2 p-2 m-0 position-relative" data-is="Yusuf - 3:22 pm">
-              <a class="float-left sohbet2"> Checking out iOS7 you know.. </a>
-            </div>
-            <div class="balon1 p-2 m-0 position-relative" data-is="You - 3:23 pm">
-              <a class="float-right"> Check out this bubble! </a>
-            </div>
-            <div class="balon2 p-2 m-0 position-relative" data-is="Yusuf - 3:26 pm">
-              <a class="float-left sohbet2"> It's pretty cool! </a>
-            </div>
-            <div class="balon1 p-2 m-0 position-relative" data-is="You - 3:28 pm">
-              <a class="float-right"> Yeah it's pure CSS & HTML </a>
-            </div>
-            <div class="balon2 p-2 m-0 position-relative" data-is="Yusuf - 3:33 pm">
-              <a class="float-left sohbet2"> Wow that's impressive. But what's even more impressive is that this bubble is really high. </a>
-            </div>
-            
           </div>
         </div>
         <div class="w-100 card-footer">

@@ -3,6 +3,10 @@ var chat_field = $('#sohbet');
 var chat_name = $('div.chat_list').find('.chat_name');
 var table_list_chat = $('table.list-chat');
 var form_chat = $('#form_chat');
+var card_footer = $('.card-footer');
+
+// hide card_footer
+card_footer.hide();
 
 
 // sound location
@@ -77,6 +81,9 @@ template = {
             var room = $(this).data('room');
             var name = $(this).data('name');
 
+            // show card footer
+            card_footer.show();
+
             // Cookies set room active
             Cookies.set('room_active', room, {
                 expires: 1
@@ -122,6 +129,16 @@ template = {
                 <a class="float-left sohbet2">${message}</a>
             </div>`;
         }
+        chat_field.append(body);
+        chat_field.animate({
+            scrollTop: $(chat_field).prop("scrollHeight")
+        }, 0);
+    },
+    log: function (msg) {
+        var body = ``;
+        body += `
+            <div class="balon2 p-2 m-0 position-relative" data-is="${msg}">
+            </div>`;
         chat_field.append(body);
         chat_field.animate({
             scrollTop: $(chat_field).prop("scrollHeight")

@@ -226,5 +226,14 @@ textarea:focus,
     border-top: 0.0625rem solid #e3e3e3!important;
 }
 
+	.navbar-brand{
+		position: relative !important;
+}
+.perfect-scrollbar-on .sidebar, .perfect-scrollbar-on .main-panel {
+    height: 140px;
+		/* max-height: 100%; */
+		position: absolute;
+}
+
   </style>
 </head>
