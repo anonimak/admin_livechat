@@ -66,7 +66,7 @@
               <div class="dropdown-menu dropdown-menu-right border p-0" aria-labelledby="dropdownMenuLink">                
               <a id="btn-export" class="dropdown-item p-2" href="#"> <i class="fa fa-download m-1" aria-hidden="true"></i> Download txt </a>
               <hr class="my-1"></hr>
-              <a class="dropdown-item p-2" href="#"> <i class="fa fa-trash m-1" aria-hidden="true"></i> Close Chat </a>
+              <a id="btn-close" class="dropdown-item p-2" href="#"> <i class="fa fa-trash m-1" aria-hidden="true"></i> Close Chat </a>
               </div>
             </div>
         </div>

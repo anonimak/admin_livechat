@@ -194,7 +194,7 @@ $(function () {
   });
 
   socket.on('reconnect_error', () => {
-    log('attempt to reconnect has failed');
+    console.log('attempt to reconnect has failed');
   });
 
   socket.on('notification', (product_id) => {
@@ -239,6 +239,16 @@ $(function () {
     alert('data kosong');
   });
 
+  socket.on('delete conversation',() => {
+    Cookies.remove("room_active", { path: '/' });
+    Cookies.remove("menu_side", { path: '/' });
+    chat_name.html('');
+    
+    Cookies.set('menu_side', 'chat_list');
+    template.check_menu(socket, cs);
+    location.reload();
+  });
+
 
   socket.on('load conversation', (data_conversation) => {
     // console.log(data_conversation);
@@ -273,11 +283,19 @@ $(function () {
 
   // export txt handler
   $("#btn-export").click(function(e) {
-    e.preventDefault;
+    e.preventDefault();
     let timestamp = Date.now();
     let username = Cookies.get("name_active");
     var blob = new Blob(data_chat, {type: "text/plain;charset=utf-8"});
     saveAs(blob, `${timestamp}_${username}.txt`);
+  });
+
+
+  // close chat
+  $("#btn-close").click(function(e){
+    e.preventDefault();
+    let room_id = Cookies.get("room_active");
+    socket.emit('delete conversation', room_id);
   });
 
   // get list customer by product
