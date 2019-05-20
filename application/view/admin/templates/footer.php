@@ -35,6 +35,9 @@
   <script src="<?= BASEURL ?>asset/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!-- Plugin Cookie -->
   <script src="<?= BASEURL ?>asset/js/plugins/js.cookie.js"></script>
+  <!-- Plugin FileSaver -->
+  <script src="<?= BASEURL ?>asset/js/plugins/FileSaver.js"></script>
+  
   <!--  Google Maps Plugin    -->
   <!-- Place this tag in your head or just before your close body tag. -->
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
@@ -61,7 +64,6 @@
     'user_id': <?= $_SESSION['id']?>,
     'username': '<?= $_SESSION['name']?>',
     'nick_name': '<?= $_SESSION['nick_name']?>',
-    'role' : '<?= $_SESSION['role']?>',
     'level': 'cs',
   };
 

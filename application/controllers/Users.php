@@ -91,8 +91,7 @@
       $_SESSION['id'] = $user['id'];
       $_SESSION['name'] = $user['name']; 
       $_SESSION['nick_name'] = $user['nick_name']; 
-      $_SESSION['email'] = $user['email']; 
-      $_SESSION['role'] = $user['role'];
+      $_SESSION['email'] = $user['email'];
       $this->redirect('Dashboards');
     }
 
@@ -103,7 +102,6 @@
       session_unset('name');
       session_unset('nick_name');
       session_unset('email');
-      session_unset('role');
       session_destroy(); 
       $this->redirect('User/login');
 

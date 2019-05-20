@@ -11,7 +11,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Sucaco livechat</a>
+            <a class="navbar-brand" href="javascript:void(0)">Sucaco</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -19,6 +19,9 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse" id="navigation">
+          <div class="col-md-3">
+          </div>
+          <img src="<?= BASEURL?>asset/img/nav.jpg" style="width: 40%;">
             <ul class="navbar-nav ml-auto">
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -29,7 +32,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
                   <li class="nav-link">
-                    <a href="<?= BASEURL ?>Users/logout" class="nav-item dropdown-item">Log out</a>
+                    <a id="logout" href="#" class="nav-item dropdown-item">Log out</a>
                   </li>
                 </ul>
               </li>

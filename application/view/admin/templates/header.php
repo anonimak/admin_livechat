@@ -183,6 +183,18 @@ textarea:focus,
 		font-size:14px;
 	}
 
+	.navbar .navbar-brand {
+    position: fixed;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    color: #ffffff;
+    margin-left: 17px;
+    margin-top: 3px;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+	}
+
 	.nav>li>a {
 		font-size:12px!important;
 	}

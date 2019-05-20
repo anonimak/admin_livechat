@@ -9,7 +9,7 @@ background: -webkit-gradient(radial, center center, 0px, center center, 100%, co
 background: -webkit-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Chrome10+,Safari5.1+ */
 background: -o-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* Opera 12+ */
 background: -ms-radial-gradient(center, ellipse cover,  #0264d6 1%,#1c2b5a 100%); /* IE10+ */
-background: radial-gradient(ellipse at center,  #0264d6 1%,#1c2b5a 100%); /* W3C */
+background: radial-gradient(ellipse at center,  #d60229 1%,#510404 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0264d6', endColorstr='#1c2b5a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 height:calc(100vh);
 width:100%;
@@ -23,7 +23,7 @@ width:100%;
 
 * {
   box-sizing: border-box;
-    margin:0px auto;
+    margin:auto;
 
   &:before,
   &:after {
@@ -97,10 +97,10 @@ border-right:1px solid #fff;
   padding: 0px 22px;
   width: 59%;
 }
-.logo{
-color:#fff;
-font-size:50px;
-  line-height: 125px;
+.logo {
+  color: #fff;
+  font-size: 50px;
+  line-height: 60px;
 }
 
 

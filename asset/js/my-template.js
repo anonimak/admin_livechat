@@ -4,10 +4,7 @@ var chat_name = $('div.chat_list').find('.chat_name');
 var table_list_chat = $('table.list-chat');
 var form_chat = $('#form_chat');
 var card_footer = $('.card-footer');
-
-// hide card_footer
-card_footer.hide();
-
+var card_action = $('#chat-action');
 
 // sound location
 var sounds = ['../admin_livechat/asset/media/sound/notification.mp3', '../admin_livechat/asset/media/sound/Ping-sound.mp3', '../admin_livechat/asset/media/sound/notification.mp3'];
@@ -59,7 +56,7 @@ template = {
                         
                         <td>
                             
-                            <p id="room_${v.room_id}" data-toggle="tooltip" title="${v.name}">
+                            <p class="room" data-id="${v.room_id}" data-toggle="tooltip" title="${v.name}">
                                 <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 7px 5px 12px 12px; font-size:8px"></i> 
                                 ${name}
                                 <span class="badge badge-info pull-right">${badge}</span>
@@ -86,6 +83,10 @@ template = {
 
             // Cookies set room active
             Cookies.set('room_active', room, {
+                expires: 1
+            });
+            // Cookies set name active
+            Cookies.set('name_active', name, {
                 expires: 1
             });
 
@@ -160,18 +161,19 @@ template = {
                 row += "<td>" + v.name + "</td>";
                 row += "<td>" + v.email + "</td>";
                 row += "<td>" + v.telp + "</td>";
-                row += "<td class='text-center'><button class='btn btn-sm btn-primary btn-simple btn-accept-chat' data-r_id=" + v.room_id + "><i class='fas fa-external-link-square-alt'></i> Accept Chat</button></td>";
+                row += "<td class='text-center'><button class='btn btn-sm btn-primary btn-simple btn-accept-chat' data-r_id=" + v.room_id + " data-name="+ v.name +"><i class='fas fa-external-link-square-alt'></i> Accept Chat</button></td>";
                 row += "</tr>";
             });
 
             table.find('tbody').html(row);
 
             // action button
-            var btn_accept_chat = $('button.btn-accept-chat');
+            let btn_accept_chat = $('button.btn-accept-chat');
             btn_accept_chat.click(function (e) {
                 e.preventDefault();
-                var r_id = $(e.currentTarget).data('r_id');
-
+                let r_id = $(e.currentTarget).data('r_id');
+                let name = $(e.currentTarget).data('name');
+                
                 // emit join room
                 socket.emit('cs join room', {
                     room_id: r_id
@@ -182,8 +184,14 @@ template = {
                     expires: 1
                 });
                 template.loadingModal('show');
+                
                 // Cookies set room active
                 Cookies.set('room_active', r_id, {
+                    expires: 1
+                });
+
+                // Cookies set name active
+                Cookies.set('name_active', name, {
                     expires: 1
                 });
 
@@ -193,6 +201,8 @@ template = {
                 });
                 template.loadingModal('hide');
                 template.check_menu(socket, cs);
+
+                // active chat
 
             });
         }
@@ -229,27 +239,49 @@ template = {
 
                 switch ($(this).data('list_online')) {
                     case 'visitor_online':
-
-
                         // ulang product
-                        $.each(JSON.parse(product), function (i, v) {
-                            console.log(v.id);
-                            socket.emit('customer product online', {
-                                id: v.id
+                        if(typeof product != 'undefined'){
+                            $.each(JSON.parse(product), function (i, v) {
+                                console.log(v.id);
+                                socket.emit('customer product online', {
+                                    id: v.id
+                                });
                             });
-                        });
+                        }
                         // socket.emit('visitor online');
 
                         break;
                     case 'chat_list':
                         // ulang product
-                        $.each(JSON.parse(product), function (i, v) {
-                            socket.emit('chat list', v.id);
-
-                            socket.on('user left', () => {
+                        if(typeof product != 'undefined'){
+                            $.each(JSON.parse(product), function (i, v) {
                                 socket.emit('chat list', v.id);
+
+                                socket.on('user left', () => {
+                                    socket.emit('chat list', v.id);
+                                });
                             });
-                        });
+                        }
+
+                        // check chat active
+                        // hide card_footer
+                        let room_active = Cookies.get("room_active");
+                        if(typeof room_active == 'undefined'){
+                            card_footer.hide();
+                            chat_field.html(`
+                            <div class="row justify-content-center align-items-center" style="margin: auto;">
+                                <h4>Please select a chat to start messaging.</h4>
+                            </div>
+                            `);
+                        } else {
+                            // load conversation
+                            socket.emit('load conversation', {
+                                room_id: room_active
+                            });
+                            card_footer.show();
+                            chat_field.html('');
+                            chat_name.html(Cookies.get('name_active'));
+                        }
                         break;
                     case 'user_online':
                         socket.emit('user online');
@@ -291,7 +323,7 @@ template = {
         var i = Cookies.get("notif_" + id);
 
         // set badge
-        $('#room_' + id).find('span.badge').html(i);
+        $(`.room[data-id='${id}']`).find('span.badge').html(i);
     },
     soundNotification: function (type) {
         var audio = new Audio(sounds[type]);
@@ -317,6 +349,7 @@ template = {
         var timestamp = moment();
         var text_message = form_chat.find('#text');
         var message = text_message.val();
+        let room_active = Cookies.get("room_active");
 
         // check value message
         // sanitize whitespace
@@ -331,11 +364,58 @@ template = {
         }
 
         // send to server
-        socket.emit('new message', message);
+        socket.emit('new message', {
+            msg : message,
+            room_id : room_active
+        });
 
         // clear text message
         text_message.val('');
         // create bubble to show in chat_field
         template.addtoBalon(data);
+    },
+
+
+    // AJAX
+    load_product: function (){
+
+    $.get(`${BASEURL}Dashboards/getProductsbyCs/${cs.user_id}`, function (data) {
+    
+        // untuk nampung product
+
+        let products = [];
+
+        // console.log(data);
+
+        // create table at here
+        let tables = ``;
+        let lists = ``;
+        
+        if(data[0].product_id != null){
+            $.each(data, function (i, v) {
+                tables += temp.table_create(v);
+                lists += temp.listchat_create(v);
+                product = {
+                id: v.product_id,
+                product_name: v.product_name
+                };
+                products.push(product);
+            });
+        }
+
+  
+        // save to cookies
+        Cookies.set(`product_${cs.user_id}`, products);
+  
+        $('#table_visitor').append(tables);
+        $('#listchat').append(lists);
+  
+  
+        // tooltip
+        $(document).ready(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+        
+      }, 'json');
     }
 }

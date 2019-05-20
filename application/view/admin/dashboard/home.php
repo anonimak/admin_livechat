@@ -59,22 +59,20 @@
               <!-- <small> İstanbul, TR </small> -->
             </h6>
 
-            <div class="dropdown">
+            <div class="dropdown" id="chat-action">
               <button id="dropdownMenuLink" data-toggle="dropdown" class="btn btn-sm btn-primary btn-simple-white float-right" role="button">
                   <i class="fa fa-ellipsis-h" title="Ayarlar!" aria-hidden="true"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-right border p-0" aria-labelledby="dropdownMenuLink">                
-              <a class="dropdown-item p-2" href="#"> <i class="fa fa-user m-1" aria-hidden="true"></i> Profile </a>
+              <a id="btn-export" class="dropdown-item p-2" href="#"> <i class="fa fa-download m-1" aria-hidden="true"></i> Download txt </a>
               <hr class="my-1"></hr>
-              <a class="dropdown-item p-2" href="#"> <i class="fa fa-trash m-1" aria-hidden="true"></i> Delete </a>
+              <a class="dropdown-item p-2" href="#"> <i class="fa fa-trash m-1" aria-hidden="true"></i> Close Chat </a>
               </div>
             </div>
         </div>
         <div class="card bg-sohbet border-0 m-0 p-0" style="height: 65vh;">
           <div id="sohbet" class="card border-0 m-0 p-0 position-relative bg-transparent" style="overflow-y: auto; height: 100vh;">
-            <div class="row justify-content-center align-items-center" style="margin: auto;">
-              <h4>Please select a chat to start messaging.</h4>
-            </div>
+            
           </div>
         </div>
         <div class="w-100 card-footer">
@@ -238,9 +236,7 @@
             </div>
           </div>
         </div>
-        <div class="card-body" id="listchat"><i class="tim-icons icon-minimal-down pull-right"></i>
-        <h6 class="card-title" data-toggle="collapse" data-target="#demo">
-          Simple collapsible (0)</h6>
+        <div class="card-body" id="listchat">
           <div id="demo" class="table table-responsive collapse">
             <table class="table list-chat">
               <tbody>

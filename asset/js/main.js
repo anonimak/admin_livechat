@@ -1,3 +1,5 @@
+var data_chat = [];
+
 temp = {
   table_create: (v) => {
     // console.log(v);
@@ -63,6 +65,15 @@ temp = {
       </div>
     `;
     return body;
+  },
+  export_to_txt: (data) => {
+    data_chat = [];
+    let body = ``;
+    $.each(data, function(i,v){
+      let timestamp = moment(v.timestamp).format('LT');
+      body += `${timestamp}, ${v.username} : ${v.message}\r\n`;
+    });
+    data_chat.push(body);
   }
 };
 
@@ -92,7 +103,7 @@ $(function () {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
-  var socket = io.connect('http://1.1.1.17:3000');
+  var socket = io.connect('http://103.4.167.187:3000');
   // var socket = io.connect('http://apps.cloudtech.id:3000');
 
   // Tell the server your username
@@ -134,24 +145,18 @@ $(function () {
   let i = 1;
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
-    // addChatMessage(data);
     let room_active = Cookies.get('room_active');
-    alert(room_active);
-    // let room_active = Cookies.get('room_active');
-
-    // if (Cookies.get("notif_" + room_active)) {
-    //   i = Cookies.get("notif_" + room_active);
-    // }
 
     if (room_active == data.id) {
       template.addtoBalon(data);
+      // alert(data);
     } else {
+      
       // Cookies set notif badge
       Cookies.set('notif_' + data.id, i++);
       let count_notif = Cookies.get('notif_' + data.id);
       template.soundNotification(0);
       template.showNotification(1, count_notif + ' message from ' + data.username, data.id);
-
     }
   });
 
@@ -192,8 +197,15 @@ $(function () {
     log('attempt to reconnect has failed');
   });
 
-  socket.on('notification', () => {
-    template.soundNotification(1);
+  socket.on('notification', (product_id) => {
+    let product = JSON.parse(Cookies.get(`product_${cs.user_id}`));
+    $.each(product, function( key, value ) {
+      if (value.id == product_id) {
+        template.check_menu(socket, cs);
+        template.soundNotification(1);
+      }
+    });
+    console.log('product_id', product_id);
   });
 
   // tambahanku
@@ -213,10 +225,13 @@ $(function () {
   // });
 
   socket.on('show visitor', (datas) => {
-    // alert('oke');
     // getUserOnline(datas);
     // template.loadingModal('show');
-    template.fetchtoTable(datas, socket);
+    if(datas != null){
+      template.fetchtoTable(datas, socket);
+    } else {
+      console.log('oke');
+    }
     // template.loadingModal('hide');
   });
 
@@ -227,13 +242,16 @@ $(function () {
 
   socket.on('load conversation', (data_conversation) => {
     // console.log(data_conversation);
+    chat_field.html('');
     $.each(data_conversation, function (i, v) {
       template.addtoBalon(v);
-      console.log(v);
+      // console.log(v);
     });
     chat_field.animate({
       scrollTop: $(chat_field).prop("scrollHeight")
     }, 0);
+    // create text
+    temp.export_to_txt(data_conversation);
   });
 
   // send ajax
@@ -253,50 +271,42 @@ $(function () {
   });
 
 
-
-
-
-
-  // AJAX HANDLER
-
-  // get product handled by cs id
-  $.get(`${BASEURL}Dashboards/getProductsbyCs/${cs.user_id}`, function (data) {
-
-    // untuk nampung product
-
-    let products = [];
-
-    alert("Data Loaded: " + data);
-
-    // create table at here
-    let tables = ``;
-    let lists = ``;
-
-    $.each(data, function (i, v) {
-      tables += temp.table_create(v);
-      lists += temp.listchat_create(v);
-      product = {
-        id: v.product_id,
-        product_name: v.product_name
-      };
-      products.push(product);
-    });
-
-    // save to cookies
-    Cookies.set(`product_${cs.user_id}`, products);
-
-    $('#table_visitor').append(tables);
-    $('#listchat').append(lists);
-
-
-    // tooltip
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-
-  }, 'json');
-
+  // export txt handler
+  $("#btn-export").click(function(e) {
+    e.preventDefault;
+    let timestamp = Date.now();
+    let username = Cookies.get("name_active");
+    var blob = new Blob(data_chat, {type: "text/plain;charset=utf-8"});
+    saveAs(blob, `${timestamp}_${username}.txt`);
+  });
 
   // get list customer by product
 
+
+  // logout
+
+  $("#logout").click(function(e) {
+    e.preventDefault;
+
+    let URL = 'Users/logout';
+    // unset cookies
+    Cookies.remove("room_active", { path: '/' });
+    Cookies.remove("menu_side", { path: '/' });
+    Cookies.remove(`product_${cs.user_id}`, { path: '/' });
+    // Cookies.remove("io",{path:'/'});
+    document.cookie =  'io=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    // socket disconnect 
+    socket.disconnect();
+    // redirect to logout
+    window.location.href = URL;
+  })
 });
+
+  // AJAX HANDLER
+  // get product handled by cs id
+  $(document).ready(function(){
+    template.load_product();
+    if (window.location.href.indexOf('reload')==-1) {
+      window.location.replace(window.location.href+'?reload');
+ }
+  });

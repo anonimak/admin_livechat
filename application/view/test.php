@@ -50,8 +50,10 @@
                     <div class="clearfix"></div>
 
                 </div> <!-- end login -->
-                <div class="logo">LOGO
-
+                <img src="<?= BASEURL?>asset/img/logo.jpeg" style="margin-left: 20px;  margin-right: 20px;">
+                <div class="logo">
+                    <h5>SUCACO</h5>
+                    <h6>LIVECHAT</h6>
                     <div class="clearfix"></div>
                 </div>
 
