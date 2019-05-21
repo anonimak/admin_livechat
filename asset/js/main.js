@@ -66,13 +66,19 @@ temp = {
     `;
     return body;
   },
-  export_to_txt: (data) => {
-    data_chat = [];
+  export_to_txt: (data, load) => {
     let body = ``;
-    $.each(data, function(i,v){
-      let timestamp = moment(v.timestamp).format('LT');
-      body += `${timestamp}, ${v.username} : ${v.message}\r\n`;
-    });
+    if (load) {
+      data_chat = [];
+
+      $.each(data, function(i,v){
+        let timestamp = moment(v.timestamp).format('LT');
+        body += `${timestamp}, ${v.username} : ${v.message}\r\n`;
+      });
+    } else {
+      let timestamp = moment(data.timestamp).format('LT');
+      body += `${timestamp}, ${data.username} : ${data.message}\r\n`;
+    }
     data_chat.push(body);
   }
 };
@@ -142,18 +148,20 @@ $(function () {
     // addParticipantsMessage(data);
   });
 
-  let i = 1;
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
     let room_active = Cookies.get('room_active');
 
     if (room_active == data.id) {
+      // create bubble
       template.addtoBalon(data);
+      // save to array
+      temp.export_to_txt(data);
       // alert(data);
     } else {
       
       // Cookies set notif badge
-      Cookies.set('notif_' + data.id, i++);
+      Cookies.set('notif_' + data.id, i_notif++);
       let count_notif = Cookies.get('notif_' + data.id);
       template.soundNotification(0);
       template.showNotification(1, count_notif + ' message from ' + data.username, data.id);
@@ -261,7 +269,8 @@ $(function () {
       scrollTop: $(chat_field).prop("scrollHeight")
     }, 0);
     // create text
-    temp.export_to_txt(data_conversation);
+    temp.export_to_txt(data_conversation, load = true);
+    console.log(data_conversation);
   });
 
   // send ajax
@@ -284,10 +293,10 @@ $(function () {
   // export txt handler
   $("#btn-export").click(function(e) {
     e.preventDefault();
-    let timestamp = Date.now();
+    let timestamp = moment().format('h:mm_a [-] D-MM-YYYY');
     let username = Cookies.get("name_active");
     var blob = new Blob(data_chat, {type: "text/plain;charset=utf-8"});
-    saveAs(blob, `${timestamp}_${username}.txt`);
+    saveAs(blob, `${timestamp}__${username}.txt`);
   });
 
 

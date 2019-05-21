@@ -3,8 +3,11 @@ var chat_field = $('#sohbet');
 var chat_name = $('div.chat_list').find('.chat_name');
 var table_list_chat = $('table.list-chat');
 var form_chat = $('#form_chat');
+var card_header = $('.card-header');
 var card_footer = $('.card-footer');
 var card_action = $('#chat-action');
+
+let i_notif = 1;
 
 // sound location
 var sounds = ['../admin_livechat/asset/media/sound/notification.mp3', '../admin_livechat/asset/media/sound/Ping-sound.mp3', '../admin_livechat/asset/media/sound/notification.mp3'];
@@ -78,7 +81,11 @@ template = {
             var room = $(this).data('room');
             var name = $(this).data('name');
 
+            if(Cookies.get('room_active') == room){
+                return;
+            }
             // show card footer
+            card_header.show();
             card_footer.show();
 
             // Cookies set room active
@@ -94,6 +101,8 @@ template = {
             Cookies.remove("notif_" + room);
 
             // Unset badge
+            i_notif = 1;
+            $('.badge').html('');
 
             // re join room
             socket.emit('cs join room', {
@@ -267,6 +276,7 @@ template = {
                         // hide card_footer
                         let room_active = Cookies.get("room_active");
                         if(typeof room_active == 'undefined'){
+                            card_header.hide();
                             card_footer.hide();
                             chat_field.html(`
                             <div class="row justify-content-center align-items-center" style="margin: auto;">
@@ -278,6 +288,7 @@ template = {
                             socket.emit('load conversation', {
                                 room_id: room_active
                             });
+                            card_header.show();
                             card_footer.show();
                             chat_field.html('');
                             chat_name.html(Cookies.get('name_active'));
@@ -373,6 +384,9 @@ template = {
         text_message.val('');
         // create bubble to show in chat_field
         template.addtoBalon(data);
+        
+        // save to array
+        temp.export_to_txt(data);
     },
 
 
