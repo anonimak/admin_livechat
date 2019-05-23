@@ -55,10 +55,10 @@ temp = {
     }
 
     body = `
-      <h5 data-toggle="collapse" data-target="#panel_${v.product_id}" data-toggle="tooltip" title="${v.product_name}"><i class="tim-icons icon-minimal-down pull-right"></i>
+      <h5 class="panel panel-collapse" data-toggle="collapse" data-target="#panel_${v.product_id}" data-toggle="tooltip" title="${v.product_name}"><i class="tim-icons icon-minimal-down pull-right"></i>
       ${product_name} (0)</h5>
       <div id="panel_${v.product_id}" class="table collapse">
-        <table class="table" id="listchat_${v.product_id}">
+        <table class="table mb-4" id="listchat_${v.product_id}">
           <tbody>
           </tbody>
         </table>
@@ -237,8 +237,6 @@ $(function () {
     // template.loadingModal('show');
     if(datas != null){
       template.fetchtoTable(datas, socket);
-    } else {
-      console.log('oke');
     }
     // template.loadingModal('hide');
   });

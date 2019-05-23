@@ -50,7 +50,7 @@
   <div class="row">
     <div class="col-lg-8 col-md-12 menu-cs chat_list">
       <div class="card border-0 rounded" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden;">
-        <div class="card-header p-1 bg-primary" style="color: rgba(96, 125, 139,1.0);">
+        <div id="header-chat_list" class="card-header p-1 bg-primary" style="color: rgba(96, 125, 139,1.0);">
           <!-- <img class="rounded float-left" style="width: 50px; height: 50px;" src="" /> -->
             
             <!-- <i class="fa fa fa-circle text-success float-left" aria-hidden="true" style="margin: 12px 0 12px 12px; font-size:8px"></i>  -->
@@ -89,175 +89,44 @@
         </div>
       </div>
     </div>
-  <!-- </div>
-  <div class="row">
-    <div class="col-lg-8 col-md-12 menu-cs chat_list">
-      <div class="card user_online">
-        <div class="card-header">
-          <h4 class="card-title"> Simple Table</h4>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table tablesorter " id="">
-              <thead class=" text-primary">
-                <tr>
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th class="text-center">
-                    Salary
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    Dakota Rice
-                  </td>
-                  <td>
-                    Niger
-                  </td>
-                  <td>
-                    Oud-Turnhout
-                  </td>
-                  <td class="text-center">
-                    $36,738
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Minerva Hooper
-                  </td>
-                  <td>
-                    Curaçao
-                  </td>
-                  <td>
-                    Sinaai-Waas
-                  </td>
-                  <td class="text-center">
-                    $23,789
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Sage Rodriguez
-                  </td>
-                  <td>
-                    Netherlands
-                  </td>
-                  <td>
-                    Baileux
-                  </td>
-                  <td class="text-center">
-                    $56,142
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Philip Chaney
-                  </td>
-                  <td>
-                    Korea, South
-                  </td>
-                  <td>
-                    Overland Park
-                  </td>
-                  <td class="text-center">
-                    $38,735
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Doris Greene
-                  </td>
-                  <td>
-                    Malawi
-                  </td>
-                  <td>
-                    Feldkirchen in Kärnten
-                  </td>
-                  <td class="text-center">
-                    $63,542
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Mason Porter
-                  </td>
-                  <td>
-                    Chile
-                  </td>
-                  <td>
-                    Gloucester
-                  </td>
-                  <td class="text-center">
-                    $78,615
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Jon Porter
-                  </td>
-                  <td>
-                    Portugal
-                  </td>
-                  <td>
-                    Gloucester
-                  </td>
-                  <td class="text-center">
-                    $98,615
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="col-lg-4 col-md-12 menu-cs chat_list">
       <div class="card card-tasks">
         <div class="card-header ">
           <h6 class="title d-inline">Active Chat</h6>
           <!-- <p class="card-category d-inline">today</p> -->
-          <div class="dropdown">
+          <!-- <div class="dropdown">
             <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
-              <!-- <i class="tim-icons icon-settings-gear-63"></i> -->
+              <i class="tim-icons icon-settings-gear-63"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="#pablo">Action</a>
               <a class="dropdown-item" href="#pablo">Another action</a>
               <a class="dropdown-item" href="#pablo">Something else</a>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="card-body" id="listchat">
-          <div id="demo" class="table table-responsive collapse">
+          <!-- <div id="demo" class="table table-responsive collapse">
             <table class="table list-chat">
               <tbody>
                 
               </tbody>
             </table>
-          </div>
-          <div class="table table-responsive">
+          </div> -->
+          <!-- <div class="table table-responsive">
             <table class="table list-chat">
               <tbody>
                 
               </tbody>
             </table>
-          </div>
+          </div> -->
         </div>
         <div class="card-footer">
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-lg-8 col-md-12 menu-cs user_online">
       <div class="card user_online">
         <div class="card-header">
@@ -428,5 +297,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

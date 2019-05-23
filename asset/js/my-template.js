@@ -3,7 +3,7 @@ var chat_field = $('#sohbet');
 var chat_name = $('div.chat_list').find('.chat_name');
 var table_list_chat = $('table.list-chat');
 var form_chat = $('#form_chat');
-var card_header = $('.card-header');
+var card_header = $('#header-chat_list');
 var card_footer = $('.card-footer');
 var card_action = $('#chat-action');
 
@@ -55,6 +55,13 @@ template = {
                 name = v.name;
             }
 
+            if(Cookies.get("room_active") == v.room_id){
+                icon = `fa-caret-square-down`;
+            } 
+            else {
+                icon = `fa-external-link-square-alt`;
+            };
+
             body += `<tr>
                         
                         <td>
@@ -68,25 +75,44 @@ template = {
                         <td class="td-actions text-right">
                             
                             <button type="button" rel="tooltip" title="" class="btn btn-link detail" data-original-title="Edit Task" data-room="${v.room_id}" data-name="${v.name}">
-                            <i class="fa fa-external-link-square-alt" aria-hidden="true"></i>
+                            <i class="fa ${icon}" aria-hidden="true"></i>
                             </button>
                         </td>
                     </tr>`;
             console.log(v.name);
 
         });
+
+                        
+        // button active list chat
+        let button = $('.detail[data-room="'+Cookies.get("room_active")+'"]');
+        console.log("button",button);
+        // active list chat
+        table_list_chat.find('tr').each(function () {
+            $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
+        });
+        button.find('i').removeClass('fa-external-link-square-alt');
+        button.find('i').addClass('fa-caret-square-down');
+
+
         $("table#listchat_" + data.id_product).html(body);
 
         $('button.detail').on('click', function () {
             var room = $(this).data('room');
             var name = $(this).data('name');
 
-            if(Cookies.get('room_active') == room){
-                return;
-            }
             // show card footer
             card_header.show();
             card_footer.show();
+
+            if(Cookies.get('room_active') == room){
+                table_list_chat.find('tr').each(function (index, element) {
+                    $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
+                });
+                $(this).find('i').removeClass('fa-external-link-square-alt');
+                $(this).find('i').addClass('fa-caret-square-down');
+                return;
+            }
 
             // Cookies set room active
             Cookies.set('room_active', room, {
@@ -157,7 +183,7 @@ template = {
     fetchtoTable: function (datas, socket) {
         let table = $('table#product_' + datas.id);
         var alert = $('#alert_visitor_table_' + datas.id);
-        if (datas.data.length === 0) {
+        if (!Array.isArray(datas.data) || !datas.data.length) {
             alert.show();
             table.hide();
         } else {
@@ -210,9 +236,16 @@ template = {
                 });
                 template.loadingModal('hide');
                 template.check_menu(socket, cs);
-
-                // active chat
-
+                
+                // button active list chat
+                let button = $('.detail[data-room="'+r_id+'"]');
+                console.log("button",button);
+                // active list chat
+                table_list_chat.find('tr').each(function (index, element) {
+                    $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
+                });
+                button.find('i').removeClass('fa-external-link-square-alt');
+                button.find('i').addClass('fa-caret-square-down');
             });
         }
     },
