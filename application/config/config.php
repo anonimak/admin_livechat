@@ -1,5 +1,5 @@
 <?php
-define("BASEURL","http://103.4.167.187/chat/");
+define("BASEURL","https://apps.sucaco.com/chat/");
 define("APPROOT",dirname(dirname(__FIlE__)));
 define("DB_HOST","localhost");
 define("DB_USER","sucaco");
