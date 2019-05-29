@@ -109,7 +109,7 @@ $(function () {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
-  var socket = io.connect('http://103.4.167.187:3000');
+  var socket = io.connect('http://apps.sucaco.com:3000');
   // var socket = io.connect('http://apps.cloudtech.id:3000');
 
   // Tell the server your username
