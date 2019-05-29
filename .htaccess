@@ -1,6 +1,8 @@
 <IfModule mod_rewrite.c>
 
     RewriteEngine on
+    RewriteCond %{HTTPS} on
+    RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
     RewriteRule ^$ asset/ [L]
     RewriteRule (.*) asset/$1 [L]
 
