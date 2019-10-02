@@ -79,14 +79,13 @@ template = {
                             </button>
                         </td>
                     </tr>`;
-            console.log(v.name);
+            // console.log(v.name);
 
         });
 
                         
         // button active list chat
         let button = $('.detail[data-room="'+Cookies.get("room_active")+'"]');
-        console.log("button",button);
         // active list chat
         table_list_chat.find('tr').each(function () {
             $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
@@ -277,14 +276,14 @@ template = {
                 $(".menu-cs").hide();
                 $(".menu-cs." + $(this).data('list_online')).show('fast', 'swing');
 
-                let product = Cookies.get(`product_${cs.user_id}`);
+                let product = JSON.parse(localStorage.getItem(`product_${cs.user_id}`));
 
                 switch ($(this).data('list_online')) {
                     case 'visitor_online':
                         // ulang product
                         if(typeof product != 'undefined'){
-                            $.each(JSON.parse(product), function (i, v) {
-                                console.log(v.id);
+                            $.each(product, function (i, v) {
+                                // console.log(v.id);
                                 socket.emit('customer product online', {
                                     id: v.id
                                 });
@@ -296,7 +295,7 @@ template = {
                     case 'chat_list':
                         // ulang product
                         if(typeof product != 'undefined'){
-                            $.each(JSON.parse(product), function (i, v) {
+                            $.each(product, function (i, v) {
                                 socket.emit('chat list', v.id);
 
                                 socket.on('user left', () => {
@@ -452,8 +451,7 @@ template = {
 
   
         // save to cookies
-        Cookies.set(`product_${cs.user_id}`, products);
-  
+        localStorage.setItem(`product_${cs.user_id}`, JSON.stringify(products));
         $('#table_visitor').append(tables);
         $('#listchat').append(lists);
   

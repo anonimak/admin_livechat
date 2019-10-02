@@ -206,7 +206,7 @@ $(function () {
   });
 
   socket.on('notification', (product_id) => {
-    let product = JSON.parse(Cookies.get(`product_${cs.user_id}`));
+    let product = JSON.parse(localStorage.getItem(`product_${cs.user_id}`));
     $.each(product, function( key, value ) {
       if (value.id == product_id) {
         template.check_menu(socket, cs);
@@ -317,7 +317,7 @@ $(function () {
     // unset cookies
     Cookies.remove("room_active", { path: '/' });
     Cookies.remove("menu_side", { path: '/' });
-    Cookies.remove(`product_${cs.user_id}`, { path: '/' });
+    localStorage.removeItem(`product_${cs.user_id}`);
     // Cookies.remove("io",{path:'/'});
     document.cookie =  'io=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     // socket disconnect 
