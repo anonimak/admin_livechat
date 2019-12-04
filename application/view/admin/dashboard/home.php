@@ -43,7 +43,38 @@
       </div>
     </div> -->
     <div class="col-12 menu-cs visitor_online" id="table_visitor">
-
+    <div class="card">
+        <div class="card-header">
+          <h6 class="title d-inline" data-toggle="tooltip" title="product">List Visitors</h6>
+        </div>
+        <div class="card-body">
+          <div id="alert_visitor_table" class="alert alert-default text-center" role="alert" style="display:none">                     
+            no visitor online
+          </div>              
+          <div class="table-responsive">
+            <table class="table tablesorter" id="table-product">
+              <thead class=" text-primary">
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Telp
+                  </th>
+                  <th class="text-center">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
     
   </div>
@@ -82,7 +113,7 @@
                 <input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..." placeholder="Type a message..." required>
               </div>
               <div class="col-2 m-0 p-1">
-                <button id="btn_send" class="btn btn-primary btn-simple border w-100" title="Gönder!" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button id="btn_send" class="btn btn-primary btn-simple border w-100" title="Kirim!" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
               </div>
             </div>
           </form>
@@ -106,6 +137,11 @@
           </div> -->
         </div>
         <div class="card-body" id="listchat">
+            <table class="table list-chat">
+              <tbody>
+                
+              </tbody>
+            </table>
           <!-- <div id="demo" class="table table-responsive collapse">
             <table class="table list-chat">
               <tbody>

@@ -29,7 +29,7 @@ template = {
     chatlist: function (socket, data) {
         // console.log(data);
         // var list_chat = $('table.list-chat');
-        var body = ``;
+        var body = `<tr></tr>`;
         $.each(data.data, function (i, v) {
             var status = ``;
             var cls = ``;
@@ -45,6 +45,7 @@ template = {
             var i = Cookies.get("notif_" + v.room_id);
             if (i > 0) {
                 badge = i;
+                
             } else {
                 badge = ``;
             }
@@ -62,9 +63,15 @@ template = {
                 icon = `fa-external-link-square-alt`;
             };
 
-            body += `<tr>
+            let class_new = ``;
+            if (Cookies.get("new_notif") == v.room_id){
+                console.log("new_notif", Cookies.get("new_notif"));
+                class_new =`class="new"`;
+            }
+
+            body += `<tr ${class_new}>
                         
-                        <td>
+                        <td class="info-room">
                             
                             <p class="room" data-id="${v.room_id}" data-toggle="tooltip" title="${v.name}">
                                 <i class="fa fa fa-circle ${cls} float-left" title="${status}" aria-hidden="true" style="margin: 7px 5px 12px 12px; font-size:8px"></i> 
@@ -87,25 +94,30 @@ template = {
         // button active list chat
         let button = $('.detail[data-room="'+Cookies.get("room_active")+'"]');
         // active list chat
-        table_list_chat.find('tr').each(function () {
+        table_list_chat.find('tbody tr').each(function () {
             $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
         });
         button.find('i').removeClass('fa-external-link-square-alt');
         button.find('i').addClass('fa-caret-square-down');
 
 
-        $("table#listchat_" + data.id_product).html(body);
+        // $("table#listchat_" + data.id_product).html(body);
+        table_list_chat.find("tbody").html(body);
 
         $('button.detail').on('click', function () {
             var room = $(this).data('room');
             var name = $(this).data('name');
-
+            
+            if ($(this).closest('td').parent('tr').find('td.info-room p span.badge').parent().is("b")) {
+                $(this).closest('td').parent('tr').find('td.info-room p span.badge').unwrap();
+                $(this).closest('td').parent('tr').removeClass('table-active');
+            }
             // show card footer
             card_header.show();
             card_footer.show();
 
             if(Cookies.get('room_active') == room){
-                table_list_chat.find('tr').each(function (index, element) {
+                table_list_chat.find('tbody tr').each(function (index, element) {
                     $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
                 });
                 $(this).find('i').removeClass('fa-external-link-square-alt');
@@ -127,7 +139,7 @@ template = {
 
             // Unset badge
             i_notif = 1;
-            $('.badge').html('');
+            $(this).closest('td').parent('tr').find('td.info-room p span.badge').html('');
 
             // re join room
             socket.emit('cs join room', {
@@ -138,7 +150,7 @@ template = {
                 room_id: room
             });
 
-            table_list_chat.find('tr').each(function (index, element) {
+            table_list_chat.find('tbody tr').each(function (index, element) {
                 $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
             });
             $(this).find('i').removeClass('fa-external-link-square-alt');
@@ -180,8 +192,9 @@ template = {
         }, 0);
     },
     fetchtoTable: function (datas, socket) {
-        let table = $('table#product_' + datas.id);
-        var alert = $('#alert_visitor_table_' + datas.id);
+        let table = $('#table-product');
+        var alert = $('#alert_visitor_table');
+        console.log(datas);
         if (!Array.isArray(datas.data) || !datas.data.length) {
             alert.show();
             table.hide();
@@ -190,7 +203,7 @@ template = {
             table.show();
             var row = "";
             $.each(datas.data, function (i, v) {
-                // console.log(v.name);
+                // console.log(v);
                 row += "<tr>";
                 row += "<td>" + v.name + "</td>";
                 row += "<td>" + v.email + "</td>";
@@ -240,7 +253,7 @@ template = {
                 let button = $('.detail[data-room="'+r_id+'"]');
                 console.log("button",button);
                 // active list chat
-                table_list_chat.find('tr').each(function (index, element) {
+                table_list_chat.find('tbody tr').each(function (index, element) {
                     $(this).find('td.td-actions').find('i').addClass('fa-external-link-square-alt');
                 });
                 button.find('i').removeClass('fa-external-link-square-alt');
@@ -281,28 +294,26 @@ template = {
                 switch ($(this).data('list_online')) {
                     case 'visitor_online':
                         // ulang product
-                        if(typeof product != 'undefined'){
-                            $.each(product, function (i, v) {
-                                // console.log(v.id);
-                                socket.emit('customer product online', {
-                                    id: v.id
-                                });
-                            });
-                        }
+                        // if(typeof product != 'undefined'){
+                            // $.each(product, function (i, v) {
+                            //     console.log(v.id);
+                                socket.emit('customer product online');
+                            // });
+                        // }
                         // socket.emit('visitor online');
 
                         break;
                     case 'chat_list':
                         // ulang product
-                        if(typeof product != 'undefined'){
-                            $.each(product, function (i, v) {
-                                socket.emit('chat list', v.id);
+                        // if(typeof product != 'undefined'){
+                        //     $.each(product, function (i, v) {
+                                socket.emit('chat list');
 
                                 socket.on('user left', () => {
-                                    socket.emit('chat list', v.id);
+                                    socket.emit('chat list');
                                 });
-                            });
-                        }
+                            // });
+                        // }
 
                         // check chat active
                         // hide card_footer
@@ -341,8 +352,6 @@ template = {
         types = ['primary', 'info', 'success', 'warning', 'danger'];
         icons = ['tim-icons icon-bell-55', 'tim-icons icon-bell-55', 'tim-icons icon-check-2', 'tim-icons icon-alert-circle-exc', 'tim-icons icon-alert-circle-exc']
 
-
-
         $.notify({
             icon: icons[type],
             message: message
@@ -367,15 +376,30 @@ template = {
 
         // set badge
         $(`.room[data-id='${id}']`).find('span.badge').html(i);
+        
+        if ($(`.room[data-id='${id}']`).closest('td').parent('tr').find('td.info-room p span.badge').parent().is("b")) {
+            
+        } else {
+            $(`.room[data-id='${id}']`).wrapInner( "<b></b>" );
+            $(`.room[data-id='${id}']`).closest('td').parent('tr').addClass('table-active');
+        }
+
+        row = $(`.room[data-id='${id}']`).closest('td').parent('tr');
+        console.log("row", row);
+        table_list_chat.find("tbody").prepend(row);
+
     },
     soundNotification: function (type) {
         var audio = new Audio(sounds[type]);
-        audio.play();
+        var promise = audio.play();
+        if (promise) {
+            //Older browsers may not return a promise, according to the MDN website
+            promise.catch(function(error) { console.log(error); });
+        }
     },
     // tampil loading modal
     // action `show`, `hide`
     loadingModal: function (action) {
-
         $.LoadingOverlay(action, {
             size: 50,
             maxSize: 60,
@@ -449,18 +473,17 @@ template = {
             });
         }
 
-  
         // save to cookies
         localStorage.setItem(`product_${cs.user_id}`, JSON.stringify(products));
         $('#table_visitor').append(tables);
         $('#listchat').append(lists);
-  
-  
+
+
         // tooltip
         $(document).ready(function () {
-          $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
         });
         
-      }, 'json');
+        }, 'json');
     }
 }

@@ -110,7 +110,6 @@ $(function () {
   var $currentInput = $usernameInput.focus();
 
   var socket = io.connect('http://apps.sucaco.com:3000');
-  // var socket = io.connect('http://apps.cloudtech.id:3000');
 
   // Tell the server your username
   socket.emit('add user', cs);
@@ -161,7 +160,14 @@ $(function () {
     } else {
       
       // Cookies set notif badge
-      Cookies.set('notif_' + data.id, i_notif++);
+      if(typeof(Cookies.get('notif_' + data.id))  === 'undefined'){
+        console.log('undifined notif')
+        Cookies.set('notif_' + data.id, i_notif++);
+      } else {
+        Cookies.set('notif_' + data.id, parseInt(Cookies.get('notif_' + data.id)) + 1);
+      }
+
+      Cookies.set('new_notif', data.id);
       let count_notif = Cookies.get('notif_' + data.id);
       template.soundNotification(0);
       template.showNotification(1, count_notif + ' message from ' + data.username, data.id);
@@ -207,12 +213,13 @@ $(function () {
 
   socket.on('notification', (product_id) => {
     let product = JSON.parse(localStorage.getItem(`product_${cs.user_id}`));
-    $.each(product, function( key, value ) {
-      if (value.id == product_id) {
+    // console.log(product);
+    // $.each(product, function( key, value ) {
+    //   if (value.id == product_id) {
         template.check_menu(socket, cs);
         template.soundNotification(1);
-      }
-    });
+    //   }
+    // });
     console.log('product_id', product_id);
   });
 
@@ -221,7 +228,7 @@ $(function () {
   // user handle
   socket.on('chat list', (data) => {
     template.chatlist(socket, data);
-    console.log(data);
+    console.log("chat list",data);
   });
 
   // socket.on('show user', (datas) => {
@@ -236,6 +243,7 @@ $(function () {
     // getUserOnline(datas);
     // template.loadingModal('show');
     if(datas != null){
+      console.log("kosong");
       template.fetchtoTable(datas, socket);
     }
     // template.loadingModal('hide');
@@ -282,7 +290,7 @@ $(function () {
   });
 
   socket.on('customer product list', (data) => {
-    console.log("test", data);
+    console.log("customer product list", data);
     // tumpahin
     template.fetchtoTable(data, socket);
   });
@@ -330,7 +338,7 @@ $(function () {
   // AJAX HANDLER
   // get product handled by cs id
   $(document).ready(function(){
-    template.load_product();
+    // template.load_product();
     if (window.location.href.indexOf('reload')==-1) {
       window.location.replace(window.location.href+'?reload');
  }
